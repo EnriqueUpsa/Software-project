@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="affad494-4c78-4017-a399-11d849619f39" name="Changes" comment="Add AnimalDAO interface">
+    <list default="true" id="affad494-4c78-4017-a399-11d849619f39" name="Changes" comment="Fix package naming and resolve DAO imports">
+      <change afterPath="$PROJECT_DIR$/src/main/java/ui/AnimalIntakeView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Dao/AnimalDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/AnimalDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/AnimalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/AnimalService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +58,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.AnimalIntakeView.executor": "Run",
     "Application.Launcher.executor": "Run",
     "Application.MainApp.executor": "Run",
     "Maven.messenger-project [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
@@ -81,7 +82,20 @@
       <recent name="it.unicas.project" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Launcher">
+  <component name="RunManager" selected="Application.AnimalIntakeView">
+    <configuration name="AnimalIntakeView" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ui.AnimalIntakeView" />
+      <module name="messenger-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Launcher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="it.unicas.project.Launcher" />
       <module name="software-project" />
@@ -116,6 +130,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.AnimalIntakeView" />
         <item itemvalue="Application.Launcher" />
         <item itemvalue="Application.MainApp" />
       </list>
@@ -143,7 +158,7 @@
       <workItem from="1768326927196" duration="1415000" />
       <workItem from="1769728804561" duration="11946000" />
       <workItem from="1770068028870" duration="1126000" />
-      <workItem from="1770072218039" duration="938000" />
+      <workItem from="1770072218039" duration="2508000" />
     </task>
     <task id="LOCAL-00001" summary="Add abstract Animal base class">
       <option name="closed" value="true" />
@@ -193,7 +208,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770071335403</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Fix package naming and resolve DAO imports">
+      <option name="closed" value="true" />
+      <created>1770073358091</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1770073358091</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -214,7 +237,8 @@
     <MESSAGE value="Add abstract Animal base class" />
     <MESSAGE value="Add Dog and Cat classes extending Animal" />
     <MESSAGE value="Add AnimalDAO interface" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add AnimalDAO interface" />
+    <MESSAGE value="Fix package naming and resolve DAO imports" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix package naming and resolve DAO imports" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
