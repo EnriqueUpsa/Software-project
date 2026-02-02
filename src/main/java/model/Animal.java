@@ -12,4 +12,8 @@ public abstract class Animal {
         this.breed = breed;
         this.intakeDate = intakeDate;
     }
+    public String getMicrochipId() {
+        return microchipId;
+    }
+
 }
