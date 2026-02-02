@@ -5,20 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="affad494-4c78-4017-a399-11d849619f39" name="Changes" comment="Add AnimalDAO interface">
-      <change afterPath="$PROJECT_DIR$/src/main/java/service/AnimalService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unicas/project/AplicacionMensajeria.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unicas/project/Chat.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unicas/project/Launcher.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unicas/project/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unicas/project/MainApp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unicas/project/Mensaje.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unicas/project/Notificable.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unicas/project/Persona.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unicas/project/Usuario.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Animal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Animal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/it/unicas/project/AppTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Dao/AnimalDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/AnimalDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/AnimalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/AnimalService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,12 +30,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/PabloVA02/Software-Engineering-Project-2025-26.git&quot;,
-    &quot;accountId&quot;: &quot;cfb757f5-1952-4ebf-bd85-d27058f7c83f&quot;
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;EnriqueUpsa&quot;
   }
 }</component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/EnriqueUpsa/Software-project.git",
+    "accountId": "fa8a280e-435f-48d4-a5ea-d8fecdbc02f1"
+  }
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -69,7 +64,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "sprint-1",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -147,7 +142,8 @@
       <workItem from="1768324719053" duration="1704000" />
       <workItem from="1768326927196" duration="1415000" />
       <workItem from="1769728804561" duration="11946000" />
-      <workItem from="1770068028870" duration="363000" />
+      <workItem from="1770068028870" duration="1126000" />
+      <workItem from="1770072218039" duration="938000" />
     </task>
     <task id="LOCAL-00001" summary="Add abstract Animal base class">
       <option name="closed" value="true" />
@@ -181,7 +177,23 @@
       <option name="project" value="LOCAL" />
       <updated>1769731015701</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Add AnimalDAO interface">
+      <option name="closed" value="true" />
+      <created>1770071242206</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1770071242206</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Add AnimalDAO interface">
+      <option name="closed" value="true" />
+      <created>1770071335403</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1770071335403</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,11 +223,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/it/unicas/project/Main.java</url>
           <line>13</line>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/model/Animal.java</url>
-          <line>12</line>
-          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

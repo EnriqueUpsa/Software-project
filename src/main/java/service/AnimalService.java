@@ -5,6 +5,7 @@ import model.Animal;
 import java.util.Optional;
 
 
+
 public class AnimalService {
     private final AnimalDAO animalDAO;
 
