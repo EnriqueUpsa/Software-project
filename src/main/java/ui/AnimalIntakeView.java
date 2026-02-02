@@ -6,6 +6,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import dao.InMemoryAnimalDAO;
+import service.AnimalService;
+import model.Animal;
+import model.Dog;
+import model.Cat;
+import java.time.LocalDate;
+
 
 public class AnimalIntakeView  extends Application{
     @Override
@@ -18,7 +25,14 @@ public class AnimalIntakeView  extends Application{
         ComboBox<String> typeBox = new ComboBox<>();
         typeBox.getItems().addAll("Dog", "Cat");
 
+        AnimalService animalService =
+                new AnimalService(new InMemoryAnimalDAO());
+
         Button registerButton = new Button("Register");
+
+        registerButton.setOnAction(e -> {
+            System.out.println("Botón pulsado"); // DEBUG
+        });
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
