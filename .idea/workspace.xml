@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="affad494-4c78-4017-a399-11d849619f39" name="Changes" comment="Add JavaFX animal intake form UI">
-      <change afterPath="$PROJECT_DIR$/src/main/java/dao/InMemoryAnimalDAO.java" afterDir="false" />
+    <list default="true" id="affad494-4c78-4017-a399-11d849619f39" name="Changes" comment="Connect JavaFX UI to service layer with in-memory DAO">
+      <change afterPath="$PROJECT_DIR$/src/test/service/AnimalServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/AnimalIntakeView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/AnimalIntakeView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +61,7 @@
     "Application.AnimalIntakeView.executor": "Run",
     "Application.Launcher.executor": "Run",
     "Application.MainApp.executor": "Run",
+    "JUnit.AnimalServiceTest.executor": "Run",
     "Maven.messenger-project [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -82,7 +83,7 @@
       <recent name="it.unicas.project" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.AnimalIntakeView">
+  <component name="RunManager" selected="JUnit.AnimalServiceTest">
     <configuration name="AnimalIntakeView" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ui.AnimalIntakeView" />
       <module name="messenger-project" />
@@ -122,6 +123,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="AnimalServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="messenger-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.AnimalServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Progetto Software" />
       <method v="2">
@@ -130,6 +146,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.AnimalServiceTest" />
         <item itemvalue="Application.AnimalIntakeView" />
         <item itemvalue="Application.Launcher" />
         <item itemvalue="Application.MainApp" />
@@ -158,7 +175,7 @@
       <workItem from="1768326927196" duration="1415000" />
       <workItem from="1769728804561" duration="11946000" />
       <workItem from="1770068028870" duration="1126000" />
-      <workItem from="1770072218039" duration="3504000" />
+      <workItem from="1770072218039" duration="5216000" />
     </task>
     <task id="LOCAL-00001" summary="Add abstract Animal base class">
       <option name="closed" value="true" />
@@ -224,7 +241,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770074864819</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Connect JavaFX UI to service layer with in-memory DAO">
+      <option name="closed" value="true" />
+      <created>1770075861558</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1770075861558</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,7 +272,8 @@
     <MESSAGE value="Add AnimalDAO interface" />
     <MESSAGE value="Fix package naming and resolve DAO imports" />
     <MESSAGE value="Add JavaFX animal intake form UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add JavaFX animal intake form UI" />
+    <MESSAGE value="Connect JavaFX UI to service layer with in-memory DAO" />
+    <option name="LAST_COMMIT_MESSAGE" value="Connect JavaFX UI to service layer with in-memory DAO" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
