@@ -2,23 +2,23 @@ package model;
 
 public class Kennel {
     private String kennelId;
-    private int capacity;
+    private int maxCapacity;
     private int occupied;
 
-    public Kennel(String kennelId, int capacity) {
+    public Kennel(String kennelId, int maxCapacity) {
         validateKennelId(kennelId);
-        validateCapacity(capacity);
+        validateCapacity(maxCapacity);
         this.kennelId = kennelId;
-        this.capacity = capacity;
+        this.maxCapacity = maxCapacity;
         this.occupied = 0;
     }
 
-    public Kennel(String kennelId, int capacity, int occupied) {
+    public Kennel(String kennelId, int maxCapacity, int occupied) {
         validateKennelId(kennelId);
-        validateCapacity(capacity);
-        validateOccupied(occupied, capacity);
+        validateCapacity(maxCapacity);
+        validateOccupied(occupied, maxCapacity);
         this.kennelId = kennelId;
-        this.capacity = capacity;
+        this.maxCapacity = maxCapacity;
         this.occupied = occupied;
     }
 
@@ -26,8 +26,8 @@ public class Kennel {
         return kennelId;
     }
 
-    public int getCapacity() {
-        return capacity;
+    public int getMaxCapacity() {
+        return maxCapacity;
     }
 
     public int getOccupied() {
@@ -35,17 +35,17 @@ public class Kennel {
     }
 
     public int getAvailableCapacity() {
-        return capacity - occupied;
+        return maxCapacity - occupied;
     }
 
-    public void setCapacity(int capacity) {
-        validateCapacity(capacity);
-        validateOccupied(this.occupied, capacity);
-        this.capacity = capacity;
+    public void setMaxCapacity(int maxCapacity) {
+        validateCapacity(maxCapacity);
+        validateOccupied(this.occupied, maxCapacity);
+        this.maxCapacity = maxCapacity;
     }
 
     public void setOccupied(int occupied) {
-        validateOccupied(occupied, this.capacity);
+        validateOccupied(occupied, this.maxCapacity);
         this.occupied = occupied;
     }
 
@@ -55,14 +55,14 @@ public class Kennel {
         }
     }
 
-    private void validateCapacity(int capacity) {
-        if (capacity < 0) {
+    private void validateCapacity(int maxCapacity) {
+        if (maxCapacity < 0) {
             throw new IllegalArgumentException("Capacity must be >= 0");
         }
     }
 
-    private void validateOccupied(int occupied, int capacity) {
-        if (occupied < 0 || occupied > capacity) {
+    private void validateOccupied(int occupied, int maxCapacity) {
+        if (occupied < 0 || occupied > maxCapacity) {
             throw new IllegalArgumentException("Occupied must be between 0 and capacity");
         }
     }
