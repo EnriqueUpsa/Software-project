@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="affad494-4c78-4017-a399-11d849619f39" name="Changes" comment="Connect JavaFX UI to service layer with in-memory DAO">
-      <change afterPath="$PROJECT_DIR$/src/test/service/AnimalServiceTest.java" afterDir="false" />
+    <list default="true" id="affad494-4c78-4017-a399-11d849619f39" name="Changes" comment="Add unit tests for animal registration logic">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/AnimalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/AnimalService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ui/AnimalIntakeView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/AnimalIntakeView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +42,11 @@
     "accountId": "fa8a280e-435f-48d4-a5ea-d8fecdbc02f1"
   }
 }]]></component>
+  <component name="JavaAutoRunManager">
+    <enabled-run-configurations>
+      <run-configuration type="MavenRunConfiguration" name="messenger-project [org.openjfx:javafx-maven-plugin:0.0.8:run]" />
+    </enabled-run-configurations>
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -175,7 +180,7 @@
       <workItem from="1768326927196" duration="1415000" />
       <workItem from="1769728804561" duration="11946000" />
       <workItem from="1770068028870" duration="1126000" />
-      <workItem from="1770072218039" duration="5216000" />
+      <workItem from="1770072218039" duration="7161000" />
     </task>
     <task id="LOCAL-00001" summary="Add abstract Animal base class">
       <option name="closed" value="true" />
@@ -249,7 +254,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770075861558</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Add unit tests for animal registration logic">
+      <option name="closed" value="true" />
+      <created>1770077578882</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1770077578882</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,7 +286,8 @@
     <MESSAGE value="Fix package naming and resolve DAO imports" />
     <MESSAGE value="Add JavaFX animal intake form UI" />
     <MESSAGE value="Connect JavaFX UI to service layer with in-memory DAO" />
-    <option name="LAST_COMMIT_MESSAGE" value="Connect JavaFX UI to service layer with in-memory DAO" />
+    <MESSAGE value="Add unit tests for animal registration logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add unit tests for animal registration logic" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
