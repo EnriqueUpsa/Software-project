@@ -23,7 +23,9 @@ public class KennelService {
         }
 
         kennelDAO.save(kennel);
-        logger.info("Kennel created successfully: " + kennel.getKennelId());
+        logger.info("Kennel created successfully: " + kennel.getKennelId()
+                + " (maxCapacity=" + kennel.getMaxCapacity()
+                + ", occupied=" + kennel.getOccupied() + ")");
     }
 
     public void assignAnimalToKennel(String kennelId) {
@@ -31,6 +33,7 @@ public class KennelService {
         if (!assigned) {
             throw new IllegalStateException("Kennel is at full capacity");
         }
+        logger.info("Kennel occupancy incremented: " + kennelId);
     }
 
     public void releaseAnimalFromKennel(String kennelId) {
@@ -43,6 +46,7 @@ public class KennelService {
 
         kennel.setOccupied(kennel.getOccupied() - 1);
         kennelDAO.update(kennel);
+        logger.info("Kennel occupancy decremented: " + kennelId);
     }
 
     private static final Logger logger =
