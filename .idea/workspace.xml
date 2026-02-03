@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="affad494-4c78-4017-a399-11d849619f39" name="Changes" comment="Define kennel max capacity attribute" />
+    <list default="true" id="affad494-4c78-4017-a399-11d849619f39" name="Changes" comment="Implement transactional capacity check" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -191,7 +191,7 @@
       <workItem from="1770072218039" duration="7799000" />
       <workItem from="1770114859404" duration="1412000" />
       <workItem from="1770116442944" duration="462000" />
-      <workItem from="1770117080324" duration="1824000" />
+      <workItem from="1770117080324" duration="2238000" />
     </task>
     <task id="LOCAL-00001" summary="Add abstract Animal base class">
       <option name="closed" value="true" />
@@ -305,7 +305,23 @@
       <option name="project" value="LOCAL" />
       <updated>1770118800550</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Create KennelDAO with JDBC">
+      <option name="closed" value="true" />
+      <created>1770118928932</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1770118928932</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Implement transactional capacity check">
+      <option name="closed" value="true" />
+      <created>1770119150407</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1770119150407</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -333,7 +349,9 @@
     <MESSAGE value="Complete US.01: animal intake UI, validation, tests and logging" />
     <MESSAGE value="Implement kennel capacity data access and in-memory persistence" />
     <MESSAGE value="Define kennel max capacity attribute" />
-    <option name="LAST_COMMIT_MESSAGE" value="Define kennel max capacity attribute" />
+    <MESSAGE value="Create KennelDAO with JDBC" />
+    <MESSAGE value="Implement transactional capacity check" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement transactional capacity check" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
