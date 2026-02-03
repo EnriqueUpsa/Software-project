@@ -4,15 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="affad494-4c78-4017-a399-11d849619f39" name="Changes" comment="Add unit tests for animal registration logic">
+    <list default="true" id="affad494-4c78-4017-a399-11d849619f39" name="Changes" comment="Complete US.01: animal intake UI, validation, tests and logging">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/AnimalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/AnimalService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ui/AnimalIntakeView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ui/AnimalIntakeView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="19" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -36,16 +37,19 @@
     &quot;assignee&quot;: &quot;EnriqueUpsa&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/EnriqueUpsa/Software-project.git",
-    "accountId": "fa8a280e-435f-48d4-a5ea-d8fecdbc02f1"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/EnriqueUpsa/Software-project.git&quot;,
+    &quot;accountId&quot;: &quot;fa8a280e-435f-48d4-a5ea-d8fecdbc02f1&quot;
   }
-}]]></component>
-  <component name="JavaAutoRunManager">
-    <enabled-run-configurations>
-      <run-configuration type="MavenRunConfiguration" name="messenger-project [org.openjfx:javafx-maven-plugin:0.0.8:run]" />
-    </enabled-run-configurations>
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -54,7 +58,7 @@
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="38D70EAoTbcfQYfXiuDszUCgIcB" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+  <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -68,10 +72,14 @@
     "Application.MainApp.executor": "Run",
     "JUnit.AnimalServiceTest.executor": "Run",
     "Maven.messenger-project [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -80,6 +88,7 @@
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "/Users/administrador/IdeaProjects/Progetto Software/src/main/java/it/unicas/project/Main.java",
     "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -161,8 +170,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.189" />
-        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.189" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
       </set>
     </attachedChunks>
   </component>
@@ -180,7 +189,10 @@
       <workItem from="1768326927196" duration="1415000" />
       <workItem from="1769728804561" duration="11946000" />
       <workItem from="1770068028870" duration="1126000" />
-      <workItem from="1770072218039" duration="7161000" />
+      <workItem from="1770072218039" duration="7799000" />
+      <workItem from="1770114859404" duration="1412000" />
+      <workItem from="1770116442944" duration="462000" />
+      <workItem from="1770117080324" duration="1108000" />
     </task>
     <task id="LOCAL-00001" summary="Add abstract Animal base class">
       <option name="closed" value="true" />
@@ -262,7 +274,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770077578882</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Complete US.01: animal intake UI, validation, tests and logging">
+      <option name="closed" value="true" />
+      <created>1770079512870</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1770079512870</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -287,7 +307,8 @@
     <MESSAGE value="Add JavaFX animal intake form UI" />
     <MESSAGE value="Connect JavaFX UI to service layer with in-memory DAO" />
     <MESSAGE value="Add unit tests for animal registration logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add unit tests for animal registration logic" />
+    <MESSAGE value="Complete US.01: animal intake UI, validation, tests and logging" />
+    <option name="LAST_COMMIT_MESSAGE" value="Complete US.01: animal intake UI, validation, tests and logging" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
