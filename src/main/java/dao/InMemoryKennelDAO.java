@@ -35,4 +35,17 @@ public class InMemoryKennelDAO implements KennelDAO {
             }
         }
     }
+
+    @Override
+    public boolean incrementOccupiedIfAvailable(String kennelId) {
+        synchronized (kennels) {
+            Kennel kennel = findById(kennelId)
+                    .orElseThrow(() -> new IllegalArgumentException("Kennel not found"));
+            if (kennel.getAvailableCapacity() <= 0) {
+                return false;
+            }
+            kennel.setOccupied(kennel.getOccupied() + 1);
+            return true;
+        }
+    }
 }

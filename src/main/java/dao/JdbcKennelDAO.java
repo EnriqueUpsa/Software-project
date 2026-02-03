@@ -74,6 +74,61 @@ public class JdbcKennelDAO implements KennelDAO {
         }
     }
 
+    @Override
+    public boolean incrementOccupiedIfAvailable(String kennelId) {
+        boolean originalAutoCommit;
+        try {
+            originalAutoCommit = connection.getAutoCommit();
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to read auto-commit state", e);
+        }
+
+        try {
+            connection.setAutoCommit(false);
+
+            String selectSql = "SELECT max_capacity, occupied FROM kennels WHERE kennel_id = ? FOR UPDATE";
+            try (PreparedStatement selectStmt = connection.prepareStatement(selectSql)) {
+                selectStmt.setString(1, kennelId);
+                try (ResultSet rs = selectStmt.executeQuery()) {
+                    if (!rs.next()) {
+                        connection.rollback();
+                        throw new IllegalArgumentException("Kennel not found");
+                    }
+
+                    int maxCapacity = rs.getInt("max_capacity");
+                    int occupied = rs.getInt("occupied");
+                    if (occupied >= maxCapacity) {
+                        connection.rollback();
+                        return false;
+                    }
+
+                    String updateSql = "UPDATE kennels SET occupied = ? WHERE kennel_id = ?";
+                    try (PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
+                        updateStmt.setInt(1, occupied + 1);
+                        updateStmt.setString(2, kennelId);
+                        updateStmt.executeUpdate();
+                    }
+                }
+            }
+
+            connection.commit();
+            return true;
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException rollbackException) {
+                e.addSuppressed(rollbackException);
+            }
+            throw new RuntimeException("Failed to increment kennel occupancy", e);
+        } finally {
+            try {
+                connection.setAutoCommit(originalAutoCommit);
+            } catch (SQLException e) {
+                throw new RuntimeException("Failed to restore auto-commit state", e);
+            }
+        }
+    }
+
     private Kennel mapRow(ResultSet rs) throws SQLException {
         String kennelId = rs.getString("kennel_id");
         int maxCapacity = rs.getInt("max_capacity");

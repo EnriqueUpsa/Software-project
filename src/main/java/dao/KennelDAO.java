@@ -13,4 +13,6 @@ public interface KennelDAO {
     List<Kennel> findAll();
 
     void update(Kennel kennel);
+
+    boolean incrementOccupiedIfAvailable(String kennelId);
 }

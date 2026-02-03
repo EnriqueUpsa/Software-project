@@ -27,15 +27,10 @@ public class KennelService {
     }
 
     public void assignAnimalToKennel(String kennelId) {
-        Kennel kennel = kennelDAO.findById(kennelId)
-                .orElseThrow(() -> new IllegalArgumentException("Kennel not found"));
-
-        if (kennel.getAvailableCapacity() <= 0) {
+        boolean assigned = kennelDAO.incrementOccupiedIfAvailable(kennelId);
+        if (!assigned) {
             throw new IllegalStateException("Kennel is at full capacity");
         }
-
-        kennel.setOccupied(kennel.getOccupied() + 1);
-        kennelDAO.update(kennel);
     }
 
     public void releaseAnimalFromKennel(String kennelId) {
