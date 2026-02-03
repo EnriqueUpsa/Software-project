@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="affad494-4c78-4017-a399-11d849619f39" name="Changes" comment="Implement transactional capacity check" />
+    <list default="true" id="affad494-4c78-4017-a399-11d849619f39" name="Changes" comment="JavaFX visual warning at 100% capacity" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -191,7 +191,7 @@
       <workItem from="1770072218039" duration="7799000" />
       <workItem from="1770114859404" duration="1412000" />
       <workItem from="1770116442944" duration="462000" />
-      <workItem from="1770117080324" duration="2238000" />
+      <workItem from="1770117080324" duration="2551000" />
     </task>
     <task id="LOCAL-00001" summary="Add abstract Animal base class">
       <option name="closed" value="true" />
@@ -321,7 +321,23 @@
       <option name="project" value="LOCAL" />
       <updated>1770119150407</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Prevent assignment when capacity exceeded">
+      <option name="closed" value="true" />
+      <created>1770119343941</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1770119343941</updated>
+    </task>
+    <task id="LOCAL-00018" summary="JavaFX visual warning at 100% capacity">
+      <option name="closed" value="true" />
+      <created>1770119508842</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1770119508842</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -351,7 +367,9 @@
     <MESSAGE value="Define kennel max capacity attribute" />
     <MESSAGE value="Create KennelDAO with JDBC" />
     <MESSAGE value="Implement transactional capacity check" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implement transactional capacity check" />
+    <MESSAGE value="Prevent assignment when capacity exceeded" />
+    <MESSAGE value="JavaFX visual warning at 100% capacity" />
+    <option name="LAST_COMMIT_MESSAGE" value="JavaFX visual warning at 100% capacity" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
