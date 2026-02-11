@@ -3,6 +3,7 @@ package service;
 import dao.AnimalDAO;
 import model.Animal;
 import java.util.Optional;
+import java.util.Map;
 import java.util.logging.Logger;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
@@ -30,6 +31,10 @@ public class AnimalService {
 
         logger.info("Animal registered successfully: "
                 + animal.getMicrochipId());
+    }
+
+    public Map<String, Integer> getAnimalStatusDistribution() {
+        return animalDAO.getStatusDistribution();
     }
 
     private static final Logger logger =

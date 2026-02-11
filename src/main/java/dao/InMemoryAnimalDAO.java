@@ -5,6 +5,8 @@ import model.Animal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
+import java.util.HashMap;
 
 public class InMemoryAnimalDAO implements AnimalDAO {
 
@@ -36,5 +38,15 @@ public class InMemoryAnimalDAO implements AnimalDAO {
                 return;
             }
         }
+    }
+
+    @Override
+    public Map<String, Integer> getStatusDistribution() {
+        Map<String, Integer> counts = new HashMap<>();
+        for (Animal animal : animals) {
+            String key = animal.getStatus().toString();
+            counts.put(key, counts.getOrDefault(key, 0) + 1);
+        }
+        return counts;
     }
 }
