@@ -29,7 +29,12 @@ public class InMemoryAnimalDAO implements AnimalDAO {
 
     @Override
     public void update(Animal animal) {
-        // not needed for Sprint 1
+        for (int i = 0; i < animals.size(); i++) {
+            Animal current = animals.get(i);
+            if (current.getMicrochipId().equals(animal.getMicrochipId())) {
+                animals.set(i, animal);
+                return;
+            }
+        }
     }
 }
-
