@@ -15,6 +15,10 @@ public class AdoptionService {
     private final AnimalDAO animalDAO;
     private final Connection connection;
 
+    public AdoptionService(AdoptionDAO adoptionDAO) {
+        this(adoptionDAO, null, null);
+    }
+
     public AdoptionService(AdoptionDAO adoptionDAO,
                            AnimalDAO animalDAO,
                            Connection connection) {
@@ -39,6 +43,11 @@ public class AdoptionService {
     }
 
     public void processAdoption(Animal animal, Adoption adoption) {
+        if (adoptionDAO == null || animalDAO == null || connection == null) {
+            throw new IllegalStateException(
+                    "Adoption processing is not configured");
+        }
+
         if (adoption == null) {
             throw new IllegalArgumentException("Adoption is required");
         }
