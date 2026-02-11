@@ -111,6 +111,21 @@ class AdoptionServiceTest {
         }
 
         @Override
+        public java.sql.CallableStatement prepareCall(String sql, int resultSetType,
+                                                      int resultSetConcurrency)
+                throws SQLException {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public java.sql.CallableStatement prepareCall(String sql, int resultSetType,
+                                                      int resultSetConcurrency,
+                                                      int resultSetHoldability)
+                throws SQLException {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public String nativeSQL(String sql) throws SQLException {
             throw new UnsupportedOperationException();
         }
