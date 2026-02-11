@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Month;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +25,11 @@ class AdoptionServiceTest {
         @Override
         public void save(Adoption adoption) {
             throw new RuntimeException("DB error");
+        }
+
+        @Override
+        public java.util.Map<Month, Integer> getMonthlyAdoptions(int year) {
+            return Collections.emptyMap();
         }
     }
 
@@ -317,7 +324,7 @@ class AdoptionServiceTest {
     @Test
     void processAdoption_valid_succeeds() {
         TrackingAnimalDAO animalDAO = new TrackingAnimalDAO();
-        AdoptionDAO adoptionDAO = adoption -> {};
+        AdoptionDAO adoptionDAO = new dao.InMemoryAdoptionDAO();
         FakeConnection connection = new FakeConnection();
         AdoptionService service = new AdoptionService(adoptionDAO, animalDAO, connection);
 
@@ -334,7 +341,7 @@ class AdoptionServiceTest {
     @Test
     void processAdoption_notEligible_throwsException() {
         TrackingAnimalDAO animalDAO = new TrackingAnimalDAO();
-        AdoptionDAO adoptionDAO = adoption -> {};
+        AdoptionDAO adoptionDAO = new dao.InMemoryAdoptionDAO();
         FakeConnection connection = new FakeConnection();
         AdoptionService service = new AdoptionService(adoptionDAO, animalDAO, connection);
 
@@ -349,7 +356,7 @@ class AdoptionServiceTest {
     @Test
     void processAdoption_duplicate_throwsException() {
         TrackingAnimalDAO animalDAO = new TrackingAnimalDAO();
-        AdoptionDAO adoptionDAO = adoption -> {};
+        AdoptionDAO adoptionDAO = new dao.InMemoryAdoptionDAO();
         FakeConnection connection = new FakeConnection();
         AdoptionService service = new AdoptionService(adoptionDAO, animalDAO, connection);
 
