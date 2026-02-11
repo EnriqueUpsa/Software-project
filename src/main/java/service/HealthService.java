@@ -4,6 +4,8 @@ import dao.HealthRecordDAO;
 import model.HealthRecord;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,6 +34,21 @@ public class HealthService {
         healthRecordDAO.save(record);
         logger.info("Health record registered successfully for microchip: "
                 + record.getMicrochipId());
+    }
+
+    public List<HealthRecord> getUpcomingVaccines(String microchipId) {
+        List<HealthRecord> records =
+                healthRecordDAO.findByMicrochipId(microchipId);
+        List<HealthRecord> upcoming = new ArrayList<>();
+        LocalDate now = LocalDate.now();
+
+        for (HealthRecord record : records) {
+            if (isVaccineDueWithin48Hours(record, now)) {
+                upcoming.add(record);
+            }
+        }
+
+        return upcoming;
     }
 
     public boolean isVaccineDueWithin48Hours(HealthRecord record) {
