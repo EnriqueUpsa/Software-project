@@ -3,6 +3,7 @@ package service;
 import dao.HealthRecordDAO;
 import model.HealthRecord;
 
+import java.time.LocalDate;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,29 @@ public class HealthService {
         healthRecordDAO.save(record);
         logger.info("Health record registered successfully for microchip: "
                 + record.getMicrochipId());
+    }
+
+    public boolean isVaccineDueWithin48Hours(HealthRecord record) {
+        return isVaccineDueWithin48Hours(record, LocalDate.now());
+    }
+
+    public boolean isVaccineDueWithin48Hours(HealthRecord record,
+                                             LocalDate referenceDate) {
+        if (record == null || referenceDate == null) {
+            return false;
+        }
+
+        if (record.getTreatmentType() != HealthRecord.TreatmentType.VACCINE) {
+            return false;
+        }
+
+        LocalDate date = record.getDate();
+        if (date == null) {
+            return false;
+        }
+
+        LocalDate limit = referenceDate.plusDays(2);
+        return (!date.isBefore(referenceDate)) && (!date.isAfter(limit));
     }
 
     private void validate(HealthRecord record) {
