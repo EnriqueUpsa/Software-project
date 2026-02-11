@@ -36,9 +36,8 @@ public class HealthService {
                 + record.getMicrochipId());
     }
 
-    public List<HealthRecord> getUpcomingVaccines(String microchipId) {
-        List<HealthRecord> records =
-                healthRecordDAO.findByMicrochipId(microchipId);
+    public List<HealthRecord> getUpcomingVaccines() {
+        List<HealthRecord> records = healthRecordDAO.findAll();
         List<HealthRecord> upcoming = new ArrayList<>();
         LocalDate now = LocalDate.now();
 

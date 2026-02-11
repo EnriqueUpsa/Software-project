@@ -20,4 +20,9 @@ public class InMemoryHealthRecordDAO implements HealthRecordDAO {
                 .filter(record -> record.getMicrochipId().equals(microchipId))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<HealthRecord> findAll() {
+        return records;
+    }
 }

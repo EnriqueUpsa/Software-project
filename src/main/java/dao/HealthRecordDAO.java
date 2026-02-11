@@ -8,4 +8,6 @@ public interface HealthRecordDAO {
     void save(HealthRecord record);
 
     List<HealthRecord> findByMicrochipId(String microchipId);
+
+    List<HealthRecord> findAll();
 }
