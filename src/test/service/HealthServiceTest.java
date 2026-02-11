@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class HealthServiceTest {
 
@@ -78,5 +80,43 @@ class HealthServiceTest {
 
         assertThrows(IllegalArgumentException.class,
                 () -> service.registerHealthRecord(record));
+    }
+
+    @Test
+    void isVaccineDueWithin48Hours_detectsUpcoming() {
+        InMemoryHealthRecordDAO dao = new InMemoryHealthRecordDAO();
+        HealthService service = new HealthService(dao);
+
+        LocalDate reference = LocalDate.of(2026, 2, 11);
+        HealthRecord record = new HealthRecord(
+                "MC-200",
+                HealthRecord.TreatmentType.VACCINE,
+                "Booster",
+                reference.plusDays(1),
+                "1.0"
+        );
+
+        boolean due = service.isVaccineDueWithin48Hours(record, reference);
+
+        assertTrue(due);
+    }
+
+    @Test
+    void isVaccineDueWithin48Hours_ignoresLaterDate() {
+        InMemoryHealthRecordDAO dao = new InMemoryHealthRecordDAO();
+        HealthService service = new HealthService(dao);
+
+        LocalDate reference = LocalDate.of(2026, 2, 11);
+        HealthRecord record = new HealthRecord(
+                "MC-201",
+                HealthRecord.TreatmentType.VACCINE,
+                "Booster",
+                reference.plusDays(3),
+                "1.0"
+        );
+
+        boolean due = service.isVaccineDueWithin48Hours(record, reference);
+
+        assertFalse(due);
     }
 }
