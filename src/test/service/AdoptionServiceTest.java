@@ -310,6 +310,16 @@ class AdoptionServiceTest {
         }
 
         @Override
+        public java.util.Map<String, Class<?>> getTypeMap() throws SQLException {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void setTypeMap(java.util.Map<String, Class<?>> map) throws SQLException {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public void setSchema(String schema) throws SQLException {
             throw new UnsupportedOperationException();
         }
