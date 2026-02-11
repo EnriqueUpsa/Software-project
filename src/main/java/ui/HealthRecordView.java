@@ -43,6 +43,8 @@ public class HealthRecordView extends Application {
                 healthService.registerHealthRecord(record);
                 showAlert(Alert.AlertType.INFORMATION,
                         "Health record saved successfully");
+                showUpcomingVaccineAlert(healthService,
+                        record.getMicrochipId());
 
                 microchipField.clear();
                 datePicker.setValue(null);
@@ -78,6 +80,8 @@ public class HealthRecordView extends Application {
         stage.setScene(new Scene(grid, 420, 260));
         stage.setTitle("Health Records");
         stage.show();
+
+        showUpcomingVaccineAlert(healthService, microchipField.getText());
     }
 
     private void showAlert(Alert.AlertType type, String message) {
@@ -85,6 +89,18 @@ public class HealthRecordView extends Application {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void showUpcomingVaccineAlert(HealthService service,
+                                          String microchipId) {
+        if (microchipId == null || microchipId.isBlank()) {
+            return;
+        }
+
+        if (!service.getUpcomingVaccines(microchipId).isEmpty()) {
+            showAlert(Alert.AlertType.WARNING,
+                    "Vaccine due in less than 48 hours");
+        }
     }
 
     public static void main(String[] args) {
