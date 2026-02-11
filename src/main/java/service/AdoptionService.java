@@ -7,6 +7,8 @@ import model.Animal;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.Month;
+import java.util.Map;
 
 public class AdoptionService {
     private final AdoptionDAO adoptionDAO;
@@ -70,5 +72,9 @@ public class AdoptionService {
                 throw new RuntimeException("Failed to restore auto-commit state", e);
             }
         }
+    }
+
+    public Map<Month, Integer> getMonthlyAdoptions(int year) {
+        return adoptionDAO.getMonthlyAdoptions(year);
     }
 }
