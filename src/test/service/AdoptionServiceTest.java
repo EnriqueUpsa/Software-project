@@ -1,10 +1,15 @@
 package service;
 
 import dao.AdoptionDAO;
+import dao.InMemoryAdopterDAO;
 import dao.InMemoryAnimalDAO;
+import dao.InMemoryStatusChangeLogDAO;
+import dao.StatusChangeLogDAO;
+import model.Adopter;
 import model.Adoption;
 import model.Animal;
 import model.Dog;
+import model.StatusChangeLog;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
@@ -16,6 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -40,6 +46,18 @@ class AdoptionServiceTest {
         public void update(Animal animal) {
             super.update(animal);
             updatedIds.add(animal.getMicrochipId());
+        }
+    }
+
+    private static class FailingStatusChangeLogDAO implements StatusChangeLogDAO {
+        @Override
+        public void save(StatusChangeLog log) {
+            throw new RuntimeException("Audit insert error");
+        }
+
+        @Override
+        public java.util.List<StatusChangeLog> findByAnimal(String microchipId) {
+            return Collections.emptyList();
         }
     }
 
@@ -350,17 +368,22 @@ class AdoptionServiceTest {
     void processAdoption_valid_succeeds() {
         TrackingAnimalDAO animalDAO = new TrackingAnimalDAO();
         AdoptionDAO adoptionDAO = new dao.InMemoryAdoptionDAO();
+        InMemoryStatusChangeLogDAO logDAO = new InMemoryStatusChangeLogDAO();
         FakeConnection connection = new FakeConnection();
-        AdoptionService service = new AdoptionService(adoptionDAO, animalDAO, connection);
+        AdoptionService service =
+                new AdoptionService(adoptionDAO, animalDAO, logDAO, connection);
 
         Dog dog = new Dog("A-1", "Labrador", LocalDate.now(),
                 Animal.Status.READY_FOR_ADOPTION);
+        animalDAO.save(dog);
         Adoption adoption = new Adoption("A-1", "U-1", LocalDate.now());
 
         service.processAdoption(dog, adoption);
 
         assertEquals(Animal.Status.ADOPTED, dog.getStatus());
+        assertEquals(1, logDAO.findByAnimal("A-1").size());
         assertTrue(connection.wasCommitted());
+        assertTrue(connection.getAutoCommit());
     }
 
     @Test
@@ -397,16 +420,157 @@ class AdoptionServiceTest {
     void processAdoption_failure_rollsBack() {
         TrackingAnimalDAO animalDAO = new TrackingAnimalDAO();
         AdoptionDAO adoptionDAO = new FailingAdoptionDAO();
+        InMemoryStatusChangeLogDAO logDAO = new InMemoryStatusChangeLogDAO();
         FakeConnection connection = new FakeConnection();
-        AdoptionService service = new AdoptionService(adoptionDAO, animalDAO, connection);
+        AdoptionService service =
+                new AdoptionService(adoptionDAO, animalDAO, logDAO, connection);
 
         Dog dog = new Dog("A-4", "Bulldog", LocalDate.now(),
                 Animal.Status.READY_FOR_ADOPTION);
+        animalDAO.save(dog);
         Adoption adoption = new Adoption("A-4", "U-4", LocalDate.now());
 
         assertThrows(RuntimeException.class,
                 () -> service.processAdoption(dog, adoption));
 
         assertTrue(connection.wasRolledBack());
+        assertTrue(logDAO.findByAnimal("A-4").isEmpty());
+        assertTrue(connection.getAutoCommit());
+    }
+
+    @Test
+    void processAdoption_auditInsertFails_rollsBack() {
+        TrackingAnimalDAO animalDAO = new TrackingAnimalDAO();
+        AdoptionDAO adoptionDAO = new dao.InMemoryAdoptionDAO();
+        StatusChangeLogDAO logDAO = new FailingStatusChangeLogDAO();
+        FakeConnection connection = new FakeConnection();
+        AdoptionService service =
+                new AdoptionService(adoptionDAO, animalDAO, logDAO, connection);
+
+        Dog dog = new Dog("A-5", "Boxer", LocalDate.now(),
+                Animal.Status.READY_FOR_ADOPTION);
+        animalDAO.save(dog);
+        Adoption adoption = new Adoption("A-5", "U-5", LocalDate.now());
+
+        assertThrows(RuntimeException.class,
+                () -> service.processAdoption(dog, adoption));
+        assertTrue(connection.wasRolledBack());
+        assertTrue(connection.getAutoCommit());
+    }
+
+    @Test
+    void processAdoption_mismatchedAnimalId_throwsException() {
+        TrackingAnimalDAO animalDAO = new TrackingAnimalDAO();
+        AdoptionDAO adoptionDAO = new dao.InMemoryAdoptionDAO();
+        FakeConnection connection = new FakeConnection();
+        AdoptionService service = new AdoptionService(adoptionDAO, animalDAO, connection);
+
+        Dog dog = new Dog("A-6", "Boxer", LocalDate.now(),
+                Animal.Status.READY_FOR_ADOPTION);
+        animalDAO.save(dog);
+        Adoption adoption = new Adoption("OTHER-ID", "U-6", LocalDate.now());
+
+        assertThrows(IllegalArgumentException.class,
+                () -> service.processAdoption(dog, adoption));
+        assertFalse(connection.wasCommitted());
+    }
+
+    @Test
+    void processAdoption_blankAdopterId_throwsException() {
+        TrackingAnimalDAO animalDAO = new TrackingAnimalDAO();
+        AdoptionDAO adoptionDAO = new dao.InMemoryAdoptionDAO();
+        FakeConnection connection = new FakeConnection();
+        AdoptionService service = new AdoptionService(adoptionDAO, animalDAO, connection);
+
+        Dog dog = new Dog("A-7", "Boxer", LocalDate.now(),
+                Animal.Status.READY_FOR_ADOPTION);
+        animalDAO.save(dog);
+        Adoption adoption = new Adoption("A-7", " ", LocalDate.now());
+
+        assertThrows(IllegalArgumentException.class,
+                () -> service.processAdoption(dog, adoption));
+        assertFalse(connection.wasCommitted());
+    }
+
+    @Test
+    void processAdoption_placementBeforeIntake_throwsException() {
+        TrackingAnimalDAO animalDAO = new TrackingAnimalDAO();
+        AdoptionDAO adoptionDAO = new dao.InMemoryAdoptionDAO();
+        FakeConnection connection = new FakeConnection();
+        AdoptionService service = new AdoptionService(adoptionDAO, animalDAO, connection);
+
+        LocalDate intakeDate = LocalDate.of(2026, 2, 15);
+        Dog dog = new Dog("A-8", "Boxer", intakeDate,
+                Animal.Status.READY_FOR_ADOPTION);
+        animalDAO.save(dog);
+        Adoption adoption = new Adoption("A-8", "U-8", intakeDate.minusDays(1));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> service.processAdoption(dog, adoption));
+    }
+
+    @Test
+    void processAdoption_nullPlacementDate_throwsException() {
+        TrackingAnimalDAO animalDAO = new TrackingAnimalDAO();
+        AdoptionDAO adoptionDAO = new dao.InMemoryAdoptionDAO();
+        FakeConnection connection = new FakeConnection();
+        AdoptionService service = new AdoptionService(adoptionDAO, animalDAO, connection);
+
+        Dog dog = new Dog("A-9", "Boxer", LocalDate.now(),
+                Animal.Status.READY_FOR_ADOPTION);
+        animalDAO.save(dog);
+        Adoption adoption = new Adoption("A-9", "U-9", null);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> service.processAdoption(dog, adoption));
+    }
+
+    @Test
+    void processAdoption_notConfigured_throwsException() {
+        AdoptionService service = new AdoptionService(new dao.InMemoryAdoptionDAO());
+        Dog dog = new Dog("A-10", "Boxer", LocalDate.now(),
+                Animal.Status.READY_FOR_ADOPTION);
+        Adoption adoption = new Adoption("A-10", "U-10", LocalDate.now());
+
+        assertThrows(IllegalStateException.class,
+                () -> service.processAdoption(dog, adoption));
+    }
+
+    @Test
+    void processAdoption_matchingFlow_withoutJdbcConnection_succeeds() {
+        TrackingAnimalDAO animalDAO = new TrackingAnimalDAO();
+        InMemoryAdopterDAO adopterDAO = new InMemoryAdopterDAO();
+        AdoptionDAO adoptionDAO = new dao.InMemoryAdoptionDAO();
+        InMemoryStatusChangeLogDAO logDAO = new InMemoryStatusChangeLogDAO();
+        AdoptionService service =
+                new AdoptionService(adoptionDAO, animalDAO, adopterDAO, logDAO, null);
+
+        Dog dog = new Dog("A-11", "Labrador", LocalDate.now().minusDays(1),
+                Animal.Status.READY_FOR_ADOPTION);
+        animalDAO.save(dog);
+        adopterDAO.save(new Adopter("U-11", "Lucia", "111", "Dog", "Labrador"));
+
+        service.processAdoption("A-11", "U-11", LocalDate.now());
+
+        assertEquals(Animal.Status.ADOPTED, dog.getStatus());
+        assertEquals(1, logDAO.findByAnimal("A-11").size());
+    }
+
+    @Test
+    void processAdoption_matchingFlow_incompatible_throwsException() {
+        TrackingAnimalDAO animalDAO = new TrackingAnimalDAO();
+        InMemoryAdopterDAO adopterDAO = new InMemoryAdopterDAO();
+        AdoptionDAO adoptionDAO = new dao.InMemoryAdoptionDAO();
+        InMemoryStatusChangeLogDAO logDAO = new InMemoryStatusChangeLogDAO();
+        AdoptionService service =
+                new AdoptionService(adoptionDAO, animalDAO, adopterDAO, logDAO, null);
+
+        Dog dog = new Dog("A-12", "Labrador", LocalDate.now().minusDays(1),
+                Animal.Status.READY_FOR_ADOPTION);
+        animalDAO.save(dog);
+        adopterDAO.save(new Adopter("U-12", "Mario", "999", "Cat", ""));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> service.processAdoption("A-12", "U-12", LocalDate.now()));
     }
 }

@@ -8,6 +8,9 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * In-memory implementation of {@link AdoptionDAO}.
+ */
 public class InMemoryAdoptionDAO implements AdoptionDAO {
     private final List<Adoption> adoptions = new ArrayList<>();
 

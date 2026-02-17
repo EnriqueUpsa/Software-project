@@ -8,6 +8,9 @@ import java.util.Optional;
 import java.util.Map;
 import java.util.HashMap;
 
+/**
+ * In-memory implementation of {@link AnimalDAO}.
+ */
 public class InMemoryAnimalDAO implements AnimalDAO {
 
     private final List<Animal> animals = new ArrayList<>();

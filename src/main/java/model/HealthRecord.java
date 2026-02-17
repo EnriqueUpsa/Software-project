@@ -7,6 +7,7 @@ import java.time.LocalDate;
  */
 public class HealthRecord {
     public enum TreatmentType {
+        VETERINARY_VISIT("Veterinary Visit"),
         VACCINE("Vaccine"),
         DIET("Diet"),
         PARASITE_TREATMENT("Parasite Treatment");

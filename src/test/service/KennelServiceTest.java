@@ -82,4 +82,30 @@ class KennelServiceTest {
             service.releaseAnimalFromKennel("K-1");
         });
     }
+
+    @Test
+    void transferAnimal_movesOccupancy() {
+        InMemoryKennelDAO dao = new InMemoryKennelDAO();
+        KennelService service = new KennelService(dao);
+
+        service.createKennel(new Kennel("K-1", Kennel.SpaceType.KENNEL, 2, 1));
+        service.createKennel(new Kennel("C-1", Kennel.SpaceType.CAGE, 2, 0));
+
+        service.transferAnimal("K-1", "C-1");
+
+        assertEquals(0, dao.findById("K-1").orElseThrow().getOccupied());
+        assertEquals(1, dao.findById("C-1").orElseThrow().getOccupied());
+    }
+
+    @Test
+    void transferAnimal_fullDestination_throwsException() {
+        InMemoryKennelDAO dao = new InMemoryKennelDAO();
+        KennelService service = new KennelService(dao);
+
+        service.createKennel(new Kennel("K-1", 2, 1));
+        service.createKennel(new Kennel("K-2", 1, 1));
+
+        assertThrows(IllegalStateException.class, () ->
+                service.transferAnimal("K-1", "K-2"));
+    }
 }

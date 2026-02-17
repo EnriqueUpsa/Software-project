@@ -119,4 +119,42 @@ class HealthServiceTest {
 
         assertFalse(due);
     }
+
+    @Test
+    void isMedicalDeadlineWithin48Hours_veterinaryVisit_detectsUpcoming() {
+        InMemoryHealthRecordDAO dao = new InMemoryHealthRecordDAO();
+        HealthService service = new HealthService(dao);
+
+        LocalDate reference = LocalDate.of(2026, 2, 11);
+        HealthRecord record = new HealthRecord(
+                "MC-300",
+                HealthRecord.TreatmentType.VETERINARY_VISIT,
+                "General checkup",
+                reference.plusDays(2),
+                "1.0"
+        );
+
+        boolean due = service.isMedicalDeadlineWithin48Hours(record, reference);
+
+        assertTrue(due);
+    }
+
+    @Test
+    void isMedicalDeadlineWithin48Hours_diet_ignored() {
+        InMemoryHealthRecordDAO dao = new InMemoryHealthRecordDAO();
+        HealthService service = new HealthService(dao);
+
+        LocalDate reference = LocalDate.of(2026, 2, 11);
+        HealthRecord record = new HealthRecord(
+                "MC-301",
+                HealthRecord.TreatmentType.DIET,
+                "Special diet",
+                reference.plusDays(1),
+                "1.0"
+        );
+
+        boolean due = service.isMedicalDeadlineWithin48Hours(record, reference);
+
+        assertFalse(due);
+    }
 }

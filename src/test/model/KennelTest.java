@@ -31,4 +31,17 @@ class KennelTest {
         Kennel kennel = new Kennel("K-1", 2);
         assertThrows(IllegalArgumentException.class, () -> kennel.setOccupied(3));
     }
+
+    @Test
+    void constructor_defaultType_isKennel() {
+        Kennel kennel = new Kennel("K-2", 3);
+        assertEquals(Kennel.SpaceType.KENNEL, kennel.getSpaceType());
+    }
+
+    @Test
+    void constructor_withType_setsType() {
+        Kennel kennel = new Kennel("C-1", Kennel.SpaceType.CAGE, 4, 1);
+        assertEquals(Kennel.SpaceType.CAGE, kennel.getSpaceType());
+        assertEquals(1, kennel.getOccupied());
+    }
 }

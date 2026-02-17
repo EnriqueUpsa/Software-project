@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * In-memory implementation of {@link HealthRecordDAO}.
+ */
 public class InMemoryHealthRecordDAO implements HealthRecordDAO {
     private final List<HealthRecord> records = new ArrayList<>();
 
