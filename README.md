@@ -41,8 +41,3 @@ bash run_tests.sh
 ## Data and Logs
 - DB file: `data/petshelter` (H2)
 - Logs: `logs/shelter.log`
-
-## Project Evidence (for exam)
-- Scrum/GitHub evidence screenshots: `docs/screenshots/taiga/`
-- Architecture and demo guide: `docs/EXAM_GUIDE.md`
-- Test summary: `docs/TEST_RESULTS.md`
