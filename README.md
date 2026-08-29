@@ -1,43 +1,148 @@
 # Pet Shelter and Adoption Management System
 
-Desktop JavaFX application for animal intake, health tracking, adoption workflow, shelter logistics, dashboard metrics and audit history.
+**Project 11 — Software Engineering 2025/2026 — University of Cassino and Southern Lazio**
+Authors: Pablo Verdejo Alonso · Enrique García Bello
 
-## Features
-- Animal registry with full profile (microchip, species, breed, age, intake date, health status, photo path, lifecycle status).
-- Health and nutrition records (veterinary visits, vaccines, diets, parasite treatments).
-- 48-hour medical deadline alerts in JavaFX.
-- Adopter registry and guided compatibility + adoption flow.
-- Shelter space logistics (kennel/cage/fenced area), capacity control and transactional transfers.
-- Dashboard with status distribution, monthly adoptions and urgent needs.
-- Status-change history and structured logging.
+Desktop JavaFX application that covers the full life cycle of a sheltered animal: intake
+registration, health and nutrition tracking, the guided adoption workflow, shelter space
+logistics with capacity control, dashboard metrics and a complete audit history.
 
-## Architecture
-- `model/`: entities and enums
-- `dao/`: DAO contracts + JDBC and in-memory implementations
-- `service/`: business rules
-- `controller/`: use-case controllers
-- `ui/view/`: JavaFX views
-- `ui/ShelterManagementApp`: app bootstrap
+---
 
-Pattern: MVC + DAO over JDBC.
+## 1. Requirements
 
-## Requirements
-- Java 21
-- Maven (optional, scripts also support non-Maven local fallback)
-- macOS recommended for provided run scripts
+| Tool | Version | Notes |
+|---|---|---|
+| JDK | 21 | `java -version` must report 21.x |
+| Maven | 3.8+ | `mvn -v` |
+| H2 Database | 2.2.224 | resolved automatically by Maven, no server needed |
 
-## Run the App
+JavaFX 21 is resolved by Maven with the platform-specific classifier for the machine that
+builds the project, so no manual JavaFX SDK installation is required.
+
+## 2. Build, test and run
+
+All commands are run **from the project root** (the folder containing `pom.xml`).
+
 ```bash
-cd "/Users/administrador/Downloads/PetShelterManagement 4"
-bash run_app.sh
+# compile
+mvn clean compile
+
+# run the full JUnit 5 suite (55 tests)
+mvn test
+
+# launch the application
+mvn javafx:run
+
+# generate the Javadoc under target/site/apidocs
+mvn javadoc:javadoc
 ```
 
-## Run Tests
-```bash
-cd "/Users/administrador/Downloads/PetShelterManagement 4"
-bash run_tests.sh
+Convenience wrappers are also provided for machines without Maven on the PATH:
+`bash run_tests.sh` and `bash run_app.sh`.
+
+## 3. Database
+
+The backend is a **relational H2 database in file mode**. No installation or server is
+needed: the file is created on first launch.
+
+- JDBC URL: `jdbc:h2:file:./data/petshelter;DB_CLOSE_ON_EXIT=FALSE`
+- User `sa`, empty password
+- Physical file: `data/petshelter.mv.db` (relative to the working directory)
+
+The schema is created automatically at start-up by each DAO (`ensureTable()`), and is
+documented in full — keys, foreign keys, check constraints and indexes — in
+[`db/schema.sql`](db/schema.sql). To start from a clean database, delete the `data/`
+folder and relaunch.
+
+### Entity–relationship overview
+
+```
+adopters ──1───┐
+               ├──< adoptions >──┐
+animals ───1───┘                 │
+   │                             │
+   ├──< health_records           │
+   └──< status_change_log        │
+kennels (capacity control)  ─────┘
 ```
 
-## Data and Logs
-- DB file: `data/petshelter` (H2)
-- Logs: `logs/shelter.log`
+- `animals` — core registry, primary key `microchip_id` (natural business key)
+- `adopters` — potential adopters with species/breed preferences
+- `adoptions` — placement of one animal with one adopter (FK to both)
+- `health_records` — veterinary history, N:1 with `animals`
+- `status_change_log` — append-only audit trail of every lifecycle transition
+- `kennels` — physical spaces with `max_capacity` / `occupied` control
+
+## 4. Architecture
+
+**Pattern: MVC + DAO over JDBC**, with a service layer holding the business rules.
+
+```
+src/main/java/
+├── model/       entities and enums (Animal, Dog, Cat, Adopter, Adoption,
+│                HealthRecord, Kennel, StatusChangeLog)
+├── dao/         DAO contracts + two implementations per contract:
+│                Jdbc*DAO (production) and InMemory*DAO (used by the tests)
+├── service/     business rules, validation, transactions and logging
+├── controller/  use-case controllers, one per functional area
+├── ui/view/     JavaFX views, one tab per functional area
+├── ui/          AppContext (dependency wiring) and ShelterManagementApp (bootstrap)
+└── util/        LoggerConfig (structured logging to logs/shelter.log)
+```
+
+The DAO interfaces are what make the layers independent: the services depend on the
+contract, never on JDBC, which is why the whole business layer is unit-testable without a
+database.
+
+### Object-oriented design
+
+- **Abstract class** — `Animal`, with the shared state and the lifecycle status.
+- **Inheritance / polymorphism** — `Dog` and `Cat` extend `Animal`; the services work
+  against `Animal` and never switch on the concrete type.
+- **Interfaces** — every DAO (`AnimalDAO`, `AdoptionDAO`, `HealthRecordDAO`, `KennelDAO`,
+  `AdopterDAO`, `StatusChangeLogDAO`) is an interface with a JDBC and an in-memory
+  implementation.
+- **Encapsulation** — entity state is private with validation in the setters/constructors.
+
+### Transactions
+
+`AdoptionService.processAdoption` is the critical path: inserting the adoption, updating
+the animal status and writing the audit entry happen inside a **single JDBC transaction**.
+If any step fails the whole operation is rolled back — this is covered by unit tests using
+failing DAO doubles.
+
+## 5. Logging
+
+Structured logging is configured in `util/LoggerConfig` and written to
+`logs/shelter.log`: intakes, exits, changes to medical therapies, kennel occupancy
+changes, adoption processing and every database error.
+
+## 6. Testing
+
+JUnit 5, **55 test methods** across 9 classes in `src/test/java`:
+
+| Area | Class | Covers |
+|---|---|---|
+| Model | `AnimalProfileTest`, `KennelTest` | entity invariants, capacity rules |
+| DAO | `InMemoryKennelDAOTest` | persistence contract |
+| Service | `AnimalServiceTest`, `HealthServiceTest`, `AdopterServiceTest`, `AdoptionServiceTest`, `KennelServiceTest`, `StatisticsServiceTest` | validation, vaccine deadlines, adoption eligibility, transaction rollback, statistics |
+
+Edge cases are exercised with hand-written test doubles (`FailingAdoptionDAO`,
+`FailingStatusChangeLogDAO`, `TrackingAnimalDAO`, `FakeConnection`) that simulate database
+failures, so the rollback and error-handling paths are actually executed.
+
+Run them with `mvn test`.
+
+## 7. Project management
+
+The project was developed with SCRUM in **4 sprints**, managed on Taiga (backlog, user
+stories with acceptance criteria, sprint planning, review and retrospective) and versioned
+on GitHub.
+
+| Sprint | Focus | Main deliverable |
+|---|---|---|
+| 1 | Domain model and persistence contracts | `Animal` hierarchy, DAO interfaces, in-memory persistence |
+| 2 | Animal intake and shelter logistics | intake UI, kennel capacity with transactional check, logging |
+| 3 | Health tracking and adoption workflow | health records, vaccine deadline alerts, transactional adoption |
+| 4 | Dashboard, statistics and consolidation | dashboard charts, statistics services, JDBC layer, test suite |
