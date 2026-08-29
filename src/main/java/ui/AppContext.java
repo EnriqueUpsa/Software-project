@@ -12,6 +12,7 @@ import dao.JdbcHealthRecordDAO;
 import dao.JdbcKennelDAO;
 import dao.JdbcStatusChangeLogDAO;
 import dao.KennelDAO;
+import dao.SchemaInitializer;
 import dao.StatusChangeLogDAO;
 import model.Kennel;
 import service.AdopterService;
@@ -79,6 +80,10 @@ public final class AppContext implements AutoCloseable {
      */
     public static AppContext createDefault() {
         Connection connection = JdbcConnectionFactory.createH2FileConnection();
+
+        // The schema is created once, in dependency order, so that the foreign
+        // keys between the child tables and animals/adopters can be declared.
+        SchemaInitializer.initialize(connection);
 
         AnimalDAO animalDAO = new JdbcAnimalDAO(connection);
         StatusChangeLogDAO statusChangeLogDAO = new JdbcStatusChangeLogDAO(connection);
