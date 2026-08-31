@@ -8,6 +8,7 @@ import service.AnimalService;
 import service.KennelService;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Controller for adopter management, compatibility checks and placements.
@@ -40,6 +41,16 @@ public class AdoptionController {
                 preferredSpecies,
                 preferredBreed
         ));
+    }
+
+    /**
+     * Guided matching: the animals this adopter can actually take home.
+     *
+     * @param adopterId identifier of a registered adopter.
+     * @return the compatible animals that are ready for adoption.
+     */
+    public List<Animal> listCandidatesForAdopter(String adopterId) {
+        return adoptionService.findCandidatesFor(adopterId);
     }
 
     public boolean checkCompatibility(String animalMicrochipId, String adopterId) {
