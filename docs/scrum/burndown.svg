@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 380" width="660" height="380" font-family="Helvetica, Arial, sans-serif">
+  <rect x="0" y="0" width="660" height="380" fill="#ffffff"/>
+  <text x="70" y="26" font-size="15" font-weight="bold" fill="#1a1a1a">Release burndown - 41 story points over 4 sprints</text>
+
+  <line x1="70" y1="46.3" x2="600" y2="46.3" stroke="#e6e6e6"/>
+  <line x1="70" y1="109.8" x2="600" y2="109.8" stroke="#e6e6e6"/>
+  <line x1="70" y1="173.2" x2="600" y2="173.2" stroke="#e6e6e6"/>
+  <line x1="70" y1="236.6" x2="600" y2="236.6" stroke="#e6e6e6"/>
+
+  <text x="60" y="51" font-size="11" fill="#666" text-anchor="end">40</text>
+  <text x="60" y="114" font-size="11" fill="#666" text-anchor="end">30</text>
+  <text x="60" y="178" font-size="11" fill="#666" text-anchor="end">20</text>
+  <text x="60" y="241" font-size="11" fill="#666" text-anchor="end">10</text>
+  <text x="60" y="304" font-size="11" fill="#666" text-anchor="end">0</text>
+
+  <line x1="70" y1="300" x2="600" y2="300" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="70" y1="40" x2="70" y2="300" stroke="#1a1a1a" stroke-width="1.5"/>
+
+  <polyline points="70,40 202.5,105 335,170 467.5,235 600,300"
+            fill="none" stroke="#9aa0a6" stroke-width="2" stroke-dasharray="6 5"/>
+
+  <polyline points="70,40 202.5,122.4 335,185.9 467.5,268.3 600,300"
+            fill="none" stroke="#1a73e8" stroke-width="2.5"/>
+  <circle cx="70" cy="40" r="4" fill="#1a73e8"/>
+  <circle cx="202.5" cy="122.4" r="4" fill="#1a73e8"/>
+  <circle cx="335" cy="185.9" r="4" fill="#1a73e8"/>
+  <circle cx="467.5" cy="268.3" r="4" fill="#1a73e8"/>
+  <circle cx="600" cy="300" r="4" fill="#1a73e8"/>
+
+  <text x="82" y="36" font-size="11" fill="#1a73e8">41</text>
+  <text x="212" y="118" font-size="11" fill="#1a73e8">28</text>
+  <text x="345" y="182" font-size="11" fill="#1a73e8">18</text>
+  <text x="477" y="264" font-size="11" fill="#1a73e8">5</text>
+  <text x="577" y="292" font-size="11" fill="#1a73e8">0</text>
+
+  <text x="70" y="320" font-size="11" fill="#444" text-anchor="middle">23 Jan</text>
+  <text x="202.5" y="320" font-size="11" fill="#444" text-anchor="middle">30 Jan</text>
+  <text x="335" y="320" font-size="11" fill="#444" text-anchor="middle">6 Feb</text>
+  <text x="467.5" y="320" font-size="11" fill="#444" text-anchor="middle">13 Feb</text>
+  <text x="600" y="320" font-size="11" fill="#444" text-anchor="middle">20 Feb</text>
+  <text x="202.5" y="336" font-size="11" fill="#888" text-anchor="middle">Sprint 1</text>
+  <text x="335" y="336" font-size="11" fill="#888" text-anchor="middle">Sprint 2</text>
+  <text x="467.5" y="336" font-size="11" fill="#888" text-anchor="middle">Sprint 3</text>
+  <text x="600" y="336" font-size="11" fill="#888" text-anchor="middle">Sprint 4</text>
+
+  <line x1="70" y1="358" x2="100" y2="358" stroke="#1a73e8" stroke-width="2.5"/>
+  <text x="106" y="362" font-size="11" fill="#444">Actual remaining points</text>
+  <line x1="260" y1="358" x2="290" y2="358" stroke="#9aa0a6" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="296" y="362" font-size="11" fill="#444">Ideal burndown</text>
+</svg>
