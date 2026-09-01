@@ -136,9 +136,15 @@ Run them with `mvn test`.
 
 ## 7. Project management
 
-The project was developed with SCRUM in **4 sprints**, managed on Taiga (backlog, user
-stories with acceptance criteria, sprint planning, review and retrospective) and versioned
-on GitHub.
+The project was developed with SCRUM in **4 sprints**, managed on
+[Taiga](https://tree.taiga.io/project/pablova02-stockmaster-inventory) (backlog, user stories
+with acceptance criteria, sprint planning, review and retrospective) and versioned on GitHub.
+
+The process documentation is in [`docs/scrum/`](docs/scrum/):
+
+- [`sprint-history.md`](docs/scrum/sprint-history.md) — the four sprints, their goals, user stories and increments
+- [`burndown.md`](docs/scrum/burndown.md) — release burndown and commit distribution
+- [`retrospective.md`](docs/scrum/retrospective.md) — what went wrong, what was corrected and what to keep
 
 | Sprint | Focus | Main deliverable |
 |---|---|---|
