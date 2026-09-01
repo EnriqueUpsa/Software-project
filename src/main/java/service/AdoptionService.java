@@ -14,6 +14,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -142,6 +144,42 @@ public class AdoptionService {
             throw new IllegalArgumentException("Animal is not compatible with adopter preferences");
         }
         processAdoption(animal, new Adoption(animalMicrochipId, adopterId, placementDate));
+    }
+
+    /**
+     * Guided matching step: lists the animals that the given adopter can
+     * actually take home.
+     *
+     * <p>The specification asks for a guided procedure rather than a free
+     * choice, so the candidates are filtered twice: by the lifecycle status of
+     * the animal, because only an animal ready for adoption can be placed, and
+     * by the preferences of the adopter. An operator therefore never starts a
+     * placement that {@link #processAdoption(String, String, LocalDate)} would
+     * refuse later.</p>
+     *
+     * @param adopterId identifier of a registered adopter.
+     * @return the compatible animals ready for adoption, empty when there is none.
+     * @throws IllegalArgumentException if the adopter is not registered.
+     * @throws IllegalStateException if the service was built without the
+     *         animal and adopter access needed for matching.
+     */
+    public List<Animal> findCandidatesFor(String adopterId) {
+        if (animalService == null || adopterService == null) {
+            throw new IllegalStateException("Adoption by matching is not configured");
+        }
+
+        Adopter adopter = adopterService.getAdopterById(adopterId);
+        List<Animal> candidates = new ArrayList<>();
+        for (Animal animal : animalService.getAllAnimals()) {
+            if (animal.getStatus() == Animal.Status.READY_FOR_ADOPTION
+                    && adopterService.isCompatible(animal, adopter)) {
+                candidates.add(animal);
+            }
+        }
+
+        logger.info("event=adoption_matching adopterId=" + adopterId
+                + " candidates=" + candidates.size());
+        return candidates;
     }
 
     public Map<Month, Integer> getMonthlyAdoptions(int year) {

@@ -6,12 +6,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import model.Animal;
 import ui.AppContext;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Adoption module view.
@@ -52,6 +56,33 @@ public class AdoptionTabView {
                 );
                 ViewAlerts.info("Adopter registered");
             } catch (IllegalArgumentException ex) {
+                ViewAlerts.error(ex.getMessage());
+            }
+        });
+
+        ListView<String> candidatesList = new ListView<>();
+        candidatesList.setPrefHeight(110);
+        candidatesList.getSelectionModel().selectedItemProperty()
+                .addListener((observable, previous, selected) -> {
+                    if (selected != null) {
+                        animalMicrochipField.setText(selected.split(" - ")[0]);
+                    }
+                });
+
+        Button suggestAnimalsButton = new Button("Suggest Animals");
+        suggestAnimalsButton.setOnAction(event -> {
+            try {
+                List<Animal> candidates =
+                        adoptionController.listCandidatesForAdopter(adopterIdField.getText());
+                candidatesList.getItems().setAll(candidates.stream()
+                        .map(animal -> animal.getMicrochipId() + " - " + animal.getSpecies()
+                                + " - " + animal.getBreed())
+                        .collect(Collectors.toList()));
+                if (candidates.isEmpty()) {
+                    ViewAlerts.info("No animal ready for adoption matches this adopter");
+                }
+            } catch (IllegalArgumentException | IllegalStateException ex) {
+                candidatesList.getItems().clear();
                 ViewAlerts.error(ex.getMessage());
             }
         });
@@ -100,6 +131,10 @@ public class AdoptionTabView {
         grid.add(new Label("Preferred Breed:"), 0, 4);
         grid.add(preferredBreedField, 1, 4);
         grid.add(registerAdopterButton, 1, 5);
+
+        grid.add(suggestAnimalsButton, 1, 6);
+        grid.add(new Label("Suggested Animals:"), 0, 13);
+        grid.add(candidatesList, 1, 13);
 
         grid.add(new Label("Animal Microchip:"), 0, 7);
         grid.add(animalMicrochipField, 1, 7);
