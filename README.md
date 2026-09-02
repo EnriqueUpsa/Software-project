@@ -28,7 +28,7 @@ All commands are run **from the project root** (the folder containing `pom.xml`)
 # compile
 mvn clean compile
 
-# run the full JUnit 5 suite (55 tests)
+# run the full JUnit 5 suite (118 tests)
 mvn test
 
 # launch the application
@@ -112,6 +112,14 @@ the animal status and writing the audit entry happen inside a **single JDBC tran
 If any step fails the whole operation is rolled back — this is covered by unit tests using
 failing DAO doubles.
 
+### Dashboard
+
+The dashboard reads three indicators through `DashboardController` and paints them with the
+JavaFX chart API: a bar chart with the distribution of the animals over the lifecycle
+statuses, a bar chart with the adoptions closed in each month of the current year, and a
+counter of the veterinary deadlines that fall inside the next 48 hours, highlighted in red
+while it is not zero. Every module refreshes it after changing data.
+
 ## 5. Logging
 
 Structured logging is configured in `util/LoggerConfig` and written to
@@ -120,13 +128,16 @@ changes, adoption processing and every database error.
 
 ## 6. Testing
 
-JUnit 5, **55 test methods** across 9 classes in `src/test/java`:
+JUnit 5, **118 test methods** across 20 classes in `src/test/java`:
 
 | Area | Class | Covers |
 |---|---|---|
 | Model | `AnimalProfileTest`, `KennelTest` | entity invariants, capacity rules |
-| DAO | `InMemoryKennelDAOTest` | persistence contract |
-| Service | `AnimalServiceTest`, `HealthServiceTest`, `AdopterServiceTest`, `AdoptionServiceTest`, `KennelServiceTest`, `StatisticsServiceTest` | validation, vaccine deadlines, adoption eligibility, transaction rollback, statistics |
+| Schema | `SchemaIntegrityTest`, `SchemaUpgradeTest` | tables, foreign keys, check constraint, indexes |
+| DAO | `JdbcAnimalDAOTest`, `JdbcAdopterDAOTest`, `JdbcHealthRecordDAOTest`, `JdbcAdoptionDAOTest`, `JdbcKennelDAOTest`, `JdbcStatusChangeLogDAOTest`, `InMemoryKennelDAOTest` | persistence contract on a real H2 database |
+| Service | `AnimalServiceTest`, `HealthServiceTest`, `AdopterServiceTest`, `AdoptionServiceTest`, `AdoptionMatchingTest`, `KennelServiceTest`, `StatisticsServiceTest` | validation, vaccine deadlines, adoption eligibility, guided matching, transaction rollback, statistics |
+| Controller | `DashboardControllerTest` | the indicators the dashboard charts are painted from |
+| Start-up | `DemoDataSeederTest` | the demo shelter loaded on an empty database |
 
 Edge cases are exercised with hand-written test doubles (`FailingAdoptionDAO`,
 `FailingStatusChangeLogDAO`, `TrackingAnimalDAO`, `FakeConnection`) that simulate database

@@ -79,7 +79,23 @@ public final class AppContext implements AutoCloseable {
      * @return initialized context.
      */
     public static AppContext createDefault() {
-        Connection connection = JdbcConnectionFactory.createH2FileConnection();
+        return createFor(JdbcConnectionFactory.createH2FileConnection());
+    }
+
+    /**
+     * Builds the context on a given connection.
+     *
+     * <p>The default context runs on the H2 file database of the application.
+     * This factory takes the connection as a parameter so that the same wiring
+     * can be built on an in-memory database in the tests.</p>
+     *
+     * @param connection open JDBC connection.
+     * @return initialized context.
+     */
+    public static AppContext createFor(Connection connection) {
+        if (connection == null) {
+            throw new IllegalArgumentException("Connection is required");
+        }
 
         // The schema is created once, in dependency order, so that the foreign
         // keys between the child tables and animals/adopters can be declared.

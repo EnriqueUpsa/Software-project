@@ -27,6 +27,7 @@ public class ShelterManagementApp extends Application {
     @Override
     public void start(Stage stage) {
         appContext = AppContext.createDefault();
+        DemoDataSeeder.seedIfEmpty(appContext);
 
         IntakeController intakeController = new IntakeController(
                 appContext.animalService(),
