@@ -23,6 +23,8 @@ import ui.view.LogisticsTabView;
  */
 public class ShelterManagementApp extends Application {
     private AppContext appContext;
+    private DashboardTabView dashboardTabView;
+    private IntakeTabView intakeTabView;
 
     @Override
     public void start(Stage stage) {
@@ -49,13 +51,16 @@ public class ShelterManagementApp extends Application {
         );
         HistoryController historyController = new HistoryController(appContext.animalService());
 
-        DashboardTabView dashboardTabView = new DashboardTabView(dashboardController);
-        Runnable refreshDashboard = dashboardTabView::refresh;
+        dashboardTabView = new DashboardTabView(dashboardController);
 
-        IntakeTabView intakeTabView = new IntakeTabView(intakeController, refreshDashboard);
-        HealthTabView healthTabView = new HealthTabView(healthController, refreshDashboard);
-        AdoptionTabView adoptionTabView = new AdoptionTabView(adoptionController, refreshDashboard);
-        LogisticsTabView logisticsTabView = new LogisticsTabView(logisticsController, refreshDashboard);
+        // Every module reports its changes through the same callback, so an adoption
+        // closed in one tab is immediately visible in the dashboard and in the registry.
+        Runnable onDataChanged = this::refreshViews;
+
+        intakeTabView = new IntakeTabView(intakeController, onDataChanged);
+        HealthTabView healthTabView = new HealthTabView(healthController, onDataChanged);
+        AdoptionTabView adoptionTabView = new AdoptionTabView(adoptionController, onDataChanged);
+        LogisticsTabView logisticsTabView = new LogisticsTabView(logisticsController, onDataChanged);
         HistoryTabView historyTabView = new HistoryTabView(historyController);
 
         TabPane tabPane = new TabPane(
@@ -67,11 +72,17 @@ public class ShelterManagementApp extends Application {
                 historyTabView.build()
         );
 
-        dashboardTabView.refresh();
+        refreshViews();
 
         stage.setScene(new Scene(tabPane, 900, 620));
         stage.setTitle("Pet Shelter Management");
         stage.show();
+    }
+
+    /** Repaints the views that show data: the dashboard and the animal registry. */
+    private void refreshViews() {
+        dashboardTabView.refresh();
+        intakeTabView.refresh();
     }
 
     @Override
