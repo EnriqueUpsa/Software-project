@@ -153,7 +153,13 @@ failures, so the rollback and error-handling paths are actually executed.
 
 Run them with `mvn test`.
 
-## 7. Project management
+## 7. User documentation
+
+[`docs/user-guide.md`](docs/user-guide.md) is the guide for the reception desk: how to start the
+application and how to use each of the six modules, with a screenshot of every screen, and a
+table of the messages the application answers with when it refuses an operation.
+
+## 8. Project management
 
 The project was developed with SCRUM in **4 sprints**, managed on
 [Taiga](https://tree.taiga.io/project/pablova02-stockmaster-inventory) (backlog, user stories
