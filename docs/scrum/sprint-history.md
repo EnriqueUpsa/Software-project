@@ -15,7 +15,7 @@ stories, their acceptance criteria and their tasks.
 | 2 · Health Monitoring & Med-Alert System | 30 Jan – 6 Feb 2026 | Intake, shelter logistics and health records | 10 | 15 |
 | 3 · Adopter Matching & Management Dashboard | 6 – 13 Feb 2026 | Adoption workflow and dashboard | 13 | 29 |
 | 4 · Audit, Logging & Reliability Testing | 13 – 20 Feb 2026 | Audit trail, logging and test suite | 10 | 3 |
-| Post-review remediation | 30 Aug – 8 Sep 2026 | Corrections after the February review | 31 | in progress |
+| Post-review remediation | 30 Aug – 8 Sep 2026 | Corrections after the February review | 34 | in progress |
 
 **41 story points** were delivered across the four sprints.
 
@@ -70,7 +70,7 @@ modules, the append-only audit trail of status changes, the continuous integrati
 and the test suite covering the adoption rules.
 
 ## Post-review remediation
-*30 August – 8 September 2026 · 31 points*
+*30 August – 8 September 2026 · 34 points*
 
 Corrective iteration opened after the February review, to fix the defects the review exposed.
 It is not a fifth development sprint: it adds no new functional scope, only the parts of
@@ -84,3 +84,4 @@ the original stories that the review found missing, unverified or badly implemen
 | US.12 — User guide with screenshots for reception staff | 3 | Pending |
 | US.13 — SCRUM process documented in the repository | 5 | Done |
 | US.14 — Dashboard indicators shown as charts | 5 | Done |
+| US.15 — Registry of the animals visible in the intake module | 3 | Done |
