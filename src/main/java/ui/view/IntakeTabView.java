@@ -1,25 +1,40 @@
 package ui.view;
 
 import controller.IntakeController;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import model.Animal;
 import ui.AppContext;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Intake module view.
+ *
+ * <p>Besides the intake form, this tab shows the registry of the animals that are
+ * currently in the shelter. Selecting a row copies its microchip into the status
+ * form, so a volunteer never has to remember a microchip identifier by heart.</p>
  */
 public class IntakeTabView {
     private final IntakeController intakeController;
     private final Runnable onDataChanged;
+
+    private final TableView<Animal> animalTable = new TableView<>();
+    private final TextField statusMicrochipField = new TextField();
+    private final ComboBox<Animal.Status> statusBox = new ComboBox<>(
+            FXCollections.observableArrayList(Animal.Status.values()));
 
     public IntakeTabView(IntakeController intakeController, Runnable onDataChanged) {
         this.intakeController = intakeController;
@@ -43,9 +58,6 @@ public class IntakeTabView {
         Label occupancyLabel = new Label();
         Button registerButton = new Button("Register Animal");
 
-        TextField statusMicrochipField = new TextField();
-        ComboBox<Animal.Status> statusBox = new ComboBox<>(
-                FXCollections.observableArrayList(Animal.Status.values()));
         statusBox.setValue(Animal.Status.READY_FOR_ADOPTION);
         Button updateStatusButton = new Button("Update Status");
 
@@ -111,7 +123,66 @@ public class IntakeTabView {
         grid.add(statusBox, 1, 12);
         grid.add(updateStatusButton, 1, 13);
 
-        return new Tab("Intake", grid);
+        VBox content = new VBox(12, grid, new Label("Animals in the shelter"), buildAnimalTable());
+        VBox.setVgrow(animalTable, Priority.ALWAYS);
+        refresh();
+
+        return new Tab("Intake", content);
+    }
+
+    /**
+     * Reloads the registry table from the controller.
+     *
+     * <p>Called after every change made in any module, because an adoption or a
+     * medical discharge also changes what this table has to show.</p>
+     */
+    public void refresh() {
+        animalTable.setItems(FXCollections.observableArrayList(intakeController.listAnimals()));
+    }
+
+    private TableView<Animal> buildAnimalTable() {
+        animalTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+        animalTable.setPlaceholder(new Label("No animal registered yet"));
+
+        TableColumn<Animal, String> microchipCol = new TableColumn<>("Microchip");
+        microchipCol.setCellValueFactory(c -> new ReadOnlyStringWrapper(c.getValue().getMicrochipId()));
+
+        // getSpecies() is abstract in Animal: the table asks the animal what it is
+        // instead of testing whether the object is a Dog or a Cat.
+        TableColumn<Animal, String> speciesCol = new TableColumn<>("Species");
+        speciesCol.setCellValueFactory(c -> new ReadOnlyStringWrapper(c.getValue().getSpecies()));
+
+        TableColumn<Animal, String> breedCol = new TableColumn<>("Breed");
+        breedCol.setCellValueFactory(c -> new ReadOnlyStringWrapper(c.getValue().getBreed()));
+
+        TableColumn<Animal, String> ageCol = new TableColumn<>("Age");
+        ageCol.setCellValueFactory(c -> new ReadOnlyStringWrapper(
+                String.valueOf(c.getValue().getEstimatedAgeYears())));
+
+        TableColumn<Animal, String> healthCol = new TableColumn<>("Health");
+        healthCol.setCellValueFactory(c -> new ReadOnlyStringWrapper(
+                c.getValue().getHealthStatus().toString()));
+
+        TableColumn<Animal, String> statusCol = new TableColumn<>("Status");
+        statusCol.setCellValueFactory(c -> new ReadOnlyStringWrapper(
+                c.getValue().getStatus().toString()));
+
+        TableColumn<Animal, String> intakeDateCol = new TableColumn<>("Intake date");
+        intakeDateCol.setCellValueFactory(c -> new ReadOnlyStringWrapper(
+                c.getValue().getIntakeDate().toString()));
+
+        animalTable.getColumns().setAll(List.of(
+                microchipCol, speciesCol, breedCol, ageCol, healthCol, statusCol, intakeDateCol));
+
+        // Selecting a row prepares the status form for that animal.
+        animalTable.getSelectionModel().selectedItemProperty().addListener((observable, previous, selected) -> {
+            if (selected != null) {
+                statusMicrochipField.setText(selected.getMicrochipId());
+                statusBox.setValue(selected.getStatus());
+            }
+        });
+
+        return animalTable;
     }
 
     private void updateOccupancyLabel(Label occupancyLabel, String spaceId) {

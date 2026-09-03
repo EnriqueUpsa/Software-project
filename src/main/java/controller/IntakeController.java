@@ -9,6 +9,9 @@ import service.AnimalService;
 import service.KennelService;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Controller for animal intake and status transitions.
@@ -60,6 +63,20 @@ public class IntakeController {
 
     public void updateStatus(String microchipId, Animal.Status status) {
         animalService.updateStatus(microchipId, status);
+    }
+
+    /**
+     * Lists the animals of the shelter for the registry table.
+     *
+     * <p>The most recent intakes are shown first, which is the order the
+     * reception desk works in.</p>
+     *
+     * @return animals ordered by intake date, newest first.
+     */
+    public List<Animal> listAnimals() {
+        List<Animal> animals = new ArrayList<>(animalService.getAllAnimals());
+        animals.sort(Comparator.comparing(Animal::getIntakeDate).reversed());
+        return animals;
     }
 
     public String getOccupancyText(String spaceId) {
