@@ -61,6 +61,7 @@ public class AdoptionTabView {
         });
 
         ListView<String> candidatesList = new ListView<>();
+        candidatesList.setPlaceholder(new Label("Press Suggest Animals for an adopter"));
         candidatesList.setPrefHeight(110);
         candidatesList.getSelectionModel().selectedItemProperty()
                 .addListener((observable, previous, selected) -> {
