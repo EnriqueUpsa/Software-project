@@ -153,6 +153,20 @@ failures, so the rollback and error-handling paths are actually executed.
 
 Run them with `mvn test`.
 
+### Coverage
+
+Coverage is measured with **JaCoCo**, on demand, so that the normal build and the continuous
+integration job stay exactly as they are:
+
+```bash
+mvn test -Pcoverage
+```
+
+The report is written to `target/site/jacoco/index.html`. The JavaFX views are left out of the
+measurement: they cannot be exercised without starting the toolkit, and counting them would hide
+the coverage of the code that is actually tested — the model, the DAO layer, the services and
+the controllers.
+
 ## 7. User documentation
 
 [`docs/user-guide.md`](docs/user-guide.md) is the guide for the reception desk: how to start the
