@@ -28,7 +28,7 @@ All commands are run **from the project root** (the folder containing `pom.xml`)
 # compile
 mvn clean compile
 
-# run the full JUnit 5 suite (123 tests)
+# run the full JUnit 5 suite (128 tests)
 mvn test
 
 # launch the application
@@ -120,6 +120,14 @@ into the status form, so no identifier has to be typed from memory. The species 
 calls the abstract `getSpecies()` of `Animal`, so the table never tests whether the
 object is a `Dog` or a `Cat`.
 
+### Medical history
+
+The health tab writes treatments and also reads them back: typing a microchip and pressing
+**Load History** shows every vaccine, visit, parasite treatment and diet of that animal,
+oldest first, with its date, description and dosage. Saving a record refreshes the table, so
+the treatment just entered is visible without reloading. The query already existed in
+`HealthRecordDAO.findByMicrochipId`; what was missing was a screen that used it.
+
 ### Dashboard
 
 The dashboard reads three indicators through `DashboardController` and paints them with the
@@ -136,7 +144,7 @@ changes, adoption processing and every database error.
 
 ## 6. Testing
 
-JUnit 5, **123 test methods** across 21 classes in `src/test/java`:
+JUnit 5, **128 test methods** across 22 classes in `src/test/java`:
 
 | Area | Class | Covers |
 |---|---|---|
@@ -144,7 +152,7 @@ JUnit 5, **123 test methods** across 21 classes in `src/test/java`:
 | Schema | `SchemaIntegrityTest`, `SchemaUpgradeTest` | tables, foreign keys, check constraint, indexes |
 | DAO | `JdbcAnimalDAOTest`, `JdbcAdopterDAOTest`, `JdbcHealthRecordDAOTest`, `JdbcAdoptionDAOTest`, `JdbcKennelDAOTest`, `JdbcStatusChangeLogDAOTest`, `InMemoryKennelDAOTest` | persistence contract on a real H2 database |
 | Service | `AnimalServiceTest`, `HealthServiceTest`, `AdopterServiceTest`, `AdoptionServiceTest`, `AdoptionMatchingTest`, `KennelServiceTest`, `StatisticsServiceTest` | validation, vaccine deadlines, adoption eligibility, guided matching, transaction rollback, statistics |
-| Controller | `DashboardControllerTest`, `IntakeControllerTest` | the indicators the dashboard charts are painted from, the registry listing and its order |
+| Controller | `DashboardControllerTest`, `IntakeControllerTest`, `HealthControllerTest` | the indicators the dashboard charts are painted from, the registry listing and its order, the medical history of an animal |
 | Start-up | `DemoDataSeederTest` | the demo shelter loaded on an empty database |
 
 Edge cases are exercised with hand-written test doubles (`FailingAdoptionDAO`,

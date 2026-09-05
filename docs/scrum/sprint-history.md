@@ -70,7 +70,7 @@ modules, the append-only audit trail of status changes, the continuous integrati
 and the test suite covering the adoption rules.
 
 ## Post-review remediation
-*30 August – 8 September 2026 · 37 points*
+*30 August – 8 September 2026 · 40 points*
 
 Corrective iteration opened after the February review, to fix the defects the review exposed.
 It is not a fifth development sprint: it adds no new functional scope, only the parts of
@@ -81,8 +81,9 @@ the original stories that the review found missing, unverified or badly implemen
 | US.09 — Referential integrity for animal, health and adoption records | 5 | Done |
 | US.10 — Persistence layer verified by automated tests | 8 | Done |
 | US.11 — Guided adoption matching reviewed against the specification | 5 | Done |
-| US.12 — User guide with screenshots for reception staff | 3 | Pending |
+| US.12 — User guide with screenshots for reception staff | 3 | Done |
 | US.13 — SCRUM process documented in the repository | 5 | Done |
 | US.14 — Dashboard indicators shown as charts | 5 | Done |
 | US.15 — Registry of the animals visible in the intake module | 3 | Done |
 | US.16 — Test coverage measured and published | 3 | Done |
+| US.17 — Medical history of an animal visible in the health module | 3 | Done |
