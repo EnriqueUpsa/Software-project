@@ -4,6 +4,7 @@ import model.HealthRecord;
 import service.HealthService;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Controller for health and nutrition operations.
@@ -28,6 +29,16 @@ public class HealthController {
                 dosage
         );
         healthService.registerHealthRecord(record);
+    }
+
+    /**
+     * Medical history of one animal, for the health table.
+     *
+     * @param microchipId microchip of the animal to consult.
+     * @return its treatments, oldest first.
+     */
+    public List<HealthRecord> listRecordsFor(String microchipId) {
+        return healthService.getRecordsFor(microchipId);
     }
 
     public int getUrgentMedicalDeadlineCount() {
