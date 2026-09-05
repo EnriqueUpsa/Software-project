@@ -175,6 +175,22 @@ measurement: they cannot be exercised without starting the toolkit, and counting
 the coverage of the code that is actually tested — the model, the DAO layer, the services and
 the controllers.
 
+Last measured run: **81 % of instructions** and 65 % of branches, over 4 741 instructions.
+
+| Package | Instructions | Branches |
+|---|---|---|
+| `model` | 86 % | 58 % |
+| `service` | 84 % | 71 % |
+| `dao` | 80 % | 69 % |
+| `ui` (context and seeder) | 91 % | 66 % |
+| `util` | 91 % | 50 % |
+| `controller` | 52 % | 45 % |
+
+The controllers are the lowest figure and that is a deliberate consequence of their role: they
+hold no business rules, only the translation from the form values to the services, so the ones
+that carry logic — intake, dashboard and health — have their own tests, and the remaining three
+are thin delegations exercised through the service suite.
+
 ## 7. User documentation
 
 [`docs/user-guide.md`](docs/user-guide.md) is the guide for the reception desk: how to start the
