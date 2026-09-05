@@ -59,6 +59,25 @@ public class HealthService {
         return upcoming;
     }
 
+    /**
+     * Medical history of one animal, as it was stored.
+     *
+     * <p>The records were already written by
+     * {@link #registerHealthRecord(HealthRecord)} and the data access contract
+     * already offered the query, but no screen read them back: a veterinarian
+     * could add a treatment and could not check what had been done before.</p>
+     *
+     * @param microchipId microchip of the animal to consult.
+     * @return its treatments, oldest first; empty when there is none.
+     * @throws IllegalArgumentException if the microchip is missing.
+     */
+    public List<HealthRecord> getRecordsFor(String microchipId) {
+        if (microchipId == null || microchipId.isBlank()) {
+            throw new IllegalArgumentException("Microchip ID is required");
+        }
+        return healthRecordDAO.findByMicrochipId(microchipId.trim());
+    }
+
     public boolean isVaccineDueWithin48Hours(HealthRecord record) {
         return isVaccineDueWithin48Hours(record, LocalDate.now());
     }

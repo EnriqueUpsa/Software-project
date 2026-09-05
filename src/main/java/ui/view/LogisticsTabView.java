@@ -43,6 +43,7 @@ public class LogisticsTabView {
         Button transferButton = new Button("Transfer Occupancy");
 
         TableView<Kennel> spaceTable = new TableView<>();
+        spaceTable.setPlaceholder(new Label("No space created yet"));
         spaceTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
         TableColumn<Kennel, String> idCol = new TableColumn<>("Space ID");

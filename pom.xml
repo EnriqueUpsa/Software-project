@@ -65,4 +65,46 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <!-- Coverage is measured on demand with "mvn test -Pcoverage". Keeping the agent
+             out of the default build means the normal "mvn test" and the continuous
+             integration job stay exactly as they were. -->
+        <profile>
+            <id>coverage</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.8.13</version>
+                        <configuration>
+                            <!-- The JavaFX views cannot be exercised without starting the
+                                 toolkit, so they are left out of the measurement instead of
+                                 lowering the figure of the code that is actually tested. -->
+                            <excludes>
+                                <exclude>ui/view/**</exclude>
+                                <exclude>ui/ShelterManagementApp.*</exclude>
+                            </excludes>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>prepare-agent</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>report</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

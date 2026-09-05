@@ -31,6 +31,9 @@ public class HistoryTabView {
     public Tab build() {
         TextField microchipField = new TextField();
         TableView<StatusChangeLog> table = new TableView<>();
+        // Without an explicit text JavaFX shows its own placeholder in the language of
+        // the machine, which would mix languages inside an English application.
+        table.setPlaceholder(new Label("Load an animal to see its status history"));
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
         TableColumn<StatusChangeLog, String> oldStatusCol = new TableColumn<>("Old");
