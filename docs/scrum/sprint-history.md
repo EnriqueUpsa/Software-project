@@ -15,9 +15,10 @@ stories, their acceptance criteria and their tasks.
 | 2 · Health Monitoring & Med-Alert System | 30 Jan – 6 Feb 2026 | Intake, shelter logistics and health records | 10 | 15 |
 | 3 · Adopter Matching & Management Dashboard | 6 – 13 Feb 2026 | Adoption workflow and dashboard | 13 | 29 |
 | 4 · Audit, Logging & Reliability Testing | 13 – 20 Feb 2026 | Audit trail, logging and test suite | 10 | 3 |
-| Post-review remediation | 30 Aug – 8 Sep 2026 | Corrections after the February review | 37 | in progress |
+| Post-review remediation | 30 Aug – 8 Sep 2026 | Corrections after the February review | 37 | 25 |
+| Delivery readiness | 5 – 8 Sep 2026 | Last gap found in the final review, and delivery | 3 | 6 |
 
-**41 story points** were delivered across the four sprints.
+**46 story points** were delivered across the four sprints.
 
 ---
 
@@ -70,7 +71,7 @@ modules, the append-only audit trail of status changes, the continuous integrati
 and the test suite covering the adoption rules.
 
 ## Post-review remediation
-*30 August – 8 September 2026 · 40 points*
+*30 August – 8 September 2026 · 37 points · scope completed on 5 September*
 
 Corrective iteration opened after the February review, to fix the defects the review exposed.
 It is not a fifth development sprint: it adds no new functional scope, only the parts of
@@ -86,4 +87,30 @@ the original stories that the review found missing, unverified or badly implemen
 | US.14 — Dashboard indicators shown as charts | 5 | Done |
 | US.15 — Registry of the animals visible in the intake module | 3 | Done |
 | US.16 — Test coverage measured and published | 3 | Done |
+
+**Delivered.** The eight defects the February review exposed: the test suite that was never
+executed, the missing referential integrity, the untested persistence layer, the matching that
+was not guided, the dashboard printed as text, the registry that could not be listed, the
+missing user guide and the unmeasured coverage.
+
+---
+
+## Delivery readiness
+*5 – 8 September 2026 · 3 points*
+
+Short iteration opened on 5 September, when the corrective sprint had closed its whole scope
+three days before its planned end. In the final review of the application before delivery one
+gap was still there: the health module could write treatments but had no way of reading them
+back. It was not folded back into a sprint that was already complete, but planned and
+delivered as its own increment.
+
+| User story | Points | Status |
+|---|---|---|
 | US.17 — Medical history of an animal visible in the health module | 3 | Done |
+
+**Delivered.** `HealthService.getRecordsFor` and `HealthController.listRecordsFor`, the history
+table of the health tab with its automatic refresh after saving, five tests over an in-memory
+database, and the coverage of the suite measured and published for the first time: 81 % of
+instructions.
+
+The board closed with **17 user stories and 86 story points** across the six iterations.
