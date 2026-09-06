@@ -50,7 +50,23 @@ that the referenced rows existed.
 | No definition of done | Every user story now carries acceptance criteria in Taiga |
 | Process undocumented | The sprint history, the burndown and this retrospective live in the repository |
 
-The suite went from 55 tests that never ran to 108 tests that run on every build.
+The suite went from 55 tests that never ran to **128 tests that run on every build**, and its reach is now a number and not an opinion: 81 % of instructions, measured with JaCoCo and published in the README.
+
+## What the final review found
+
+Reviewing the application screen by screen before delivery, with the corrective sprint already
+complete, one gap was still there. The health module could write treatments and had no way of
+reading them back: `HealthRecordDAO.findByMicrochipId` existed in the interface, in the JDBC
+implementation and in the in-memory one, and no screen ever called it. A veterinarian could
+add a vaccine without being able to check what had already been done.
+
+It is the same shape of defect as the animal registry corrected earlier in the iteration: a
+query that the data layer offered and the interface never used. Looking for that pattern
+deliberately — a DAO method with no caller — is what found it.
+
+The decision was not to fold it into the corrective sprint, which had closed its whole scope,
+but to plan it as its own short iteration, *Delivery readiness*, and deliver it as US.17 with
+its tests and its documentation. A finished sprint is finished; new work belongs in a new one.
 
 ## What to keep
 
