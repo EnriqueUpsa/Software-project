@@ -52,9 +52,9 @@ recorded here for completeness.
 
 | Iteration | Dates | Points | Commits |
 |---|---|---|---|
-| Post-review remediation | 30 Aug – 5 Sep 2026 | 37 | 25 |
+| Post-review remediation | 30 Aug – 8 Sep 2026 | 37 | 25 |
 | Delivery readiness | 5 – 8 Sep 2026 | 3 | 6 |
 
-Both closed their whole scope. The corrective iteration also fixed the process weakness the
-chart above hides: its 25 commits are spread over six of its seven days, instead of landing in
-a single session.
+Both closed their whole scope, the corrective one three days before its planned end. It also
+fixed the process weakness the chart above hides: its 25 commits are spread over six days
+instead of landing in a single session.

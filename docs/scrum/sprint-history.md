@@ -15,7 +15,7 @@ stories, their acceptance criteria and their tasks.
 | 2 · Health Monitoring & Med-Alert System | 30 Jan – 6 Feb 2026 | Intake, shelter logistics and health records | 10 | 15 |
 | 3 · Adopter Matching & Management Dashboard | 6 – 13 Feb 2026 | Adoption workflow and dashboard | 13 | 29 |
 | 4 · Audit, Logging & Reliability Testing | 13 – 20 Feb 2026 | Audit trail, logging and test suite | 10 | 3 |
-| Post-review remediation | 30 Aug – 5 Sep 2026 | Corrections after the February review | 37 | 25 |
+| Post-review remediation | 30 Aug – 8 Sep 2026 | Corrections after the February review | 37 | 25 |
 | Delivery readiness | 5 – 8 Sep 2026 | Last gap found in the final review, and delivery | 3 | 6 |
 
 **46 story points** were delivered across the four sprints.
@@ -71,7 +71,7 @@ modules, the append-only audit trail of status changes, the continuous integrati
 and the test suite covering the adoption rules.
 
 ## Post-review remediation
-*30 August – 5 September 2026 · 37 points*
+*30 August – 8 September 2026 · 37 points · scope completed on 5 September*
 
 Corrective iteration opened after the February review, to fix the defects the review exposed.
 It is not a fifth development sprint: it adds no new functional scope, only the parts of
@@ -98,10 +98,11 @@ missing user guide and the unmeasured coverage.
 ## Delivery readiness
 *5 – 8 September 2026 · 3 points*
 
-Short iteration opened when the corrective sprint had already closed its whole scope. In the
-final review of the application before delivery, one gap was still there: the health module
-could write treatments but had no way of reading them back. It was not folded into the
-corrective sprint, which was complete, but planned and delivered as its own increment.
+Short iteration opened on 5 September, when the corrective sprint had closed its whole scope
+three days before its planned end. In the final review of the application before delivery one
+gap was still there: the health module could write treatments but had no way of reading them
+back. It was not folded back into a sprint that was already complete, but planned and
+delivered as its own increment.
 
 | User story | Points | Status |
 |---|---|---|
