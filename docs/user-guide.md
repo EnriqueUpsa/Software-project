@@ -67,6 +67,16 @@ that arrived today are always the first ones on screen.
 4. Write a short **Description** and the **Dosage**, which must be a positive number.
 5. Press **Save Record**.
 
+**To look up what has already been done to an animal:**
+
+1. Write its microchip in **History Microchip ID**.
+2. Press **Load History**.
+
+The table at the bottom lists every treatment of that animal, oldest first, with its date, type,
+description and dosage. A treatment saved with the form above appears there straight away,
+without having to load it again. Leaving the field empty simply clears the table, and an animal
+with no treatments yet shows an empty table rather than an error.
+
 **Urgent medical deadlines (48h)** counts the treatments that fall inside the next two days,
 diets excluded. It is the number the veterinarian checks first thing in the morning.
 
