@@ -145,8 +145,6 @@ The **Refresh** button repaints the charts on demand.
 
 ## 7. History — the audit trail of an animal
 
-![History tab](user-guide/06-history.png)
-
 Write the **Microchip ID** of an animal and press **Load**. The table lists every status change
 of that animal with the previous status, the new one and the moment it happened.
 
